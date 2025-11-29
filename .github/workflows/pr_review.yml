@@ -1,32 +1,31 @@
-name: PR Review Orchestrator
+name: IngestionAgentRunner
 
 on:
+  push:
+    paths:
+      - "app.py"
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  pr-review:
+  run-ingestion:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
-        
+        python-version: "3.10"
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
         pip install -r requirements.txt
-        
-    - name: Run PR Review Orchestrator
+
+    - name: Run ingestion agent (ONLY app.py)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GITHUB_REPO: ${{ github.repository }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
-        python main.py --pr-number $PR_NUMBER
+        python app.py

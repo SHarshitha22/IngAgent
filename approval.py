@@ -1,5 +1,6 @@
 import time
-from typing import Optional, Dict, Any
+from typing import List, Dict, Any
+from typing import Optional
 from github_client import GitHubClient
 from config import Config
 from db import Database

@@ -1,8 +1,17 @@
-print('hello world')
-# Change for PR trigger
-print("second changes")
-print("FINAL")
-print("Testing only app.py runs")
-print("Branch issue")
+print("Running ingestion agent...")
+print("Hello from new branch")
 
-print("checking sql")
+
+from ingestion_agent import IngestionAgent
+
+agent = IngestionAgent()
+
+# IMPORTANT: PR number comes from GitHub
+import os
+pr_number = int(os.getenv("PR_NUMBER", "1"))
+
+agent.run(pr_number)
+
+print("Ingestion completed.")
+print("How long")
+
